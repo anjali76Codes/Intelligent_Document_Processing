@@ -1,5 +1,0 @@
-Verification Results
-=====================
-
-Metadata Check: Modification Date: D:20250308102759+05'30' - Document has been modified.
-Structure Check: Error checking structure: 'Document' object has no attribute 'annots'

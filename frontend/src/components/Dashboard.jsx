@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaCheckCircle, FaTimesCircle, FaClock, FaPercentage } from 'react-icons/fa';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
+import { Link } from 'react-router-dom'; // Import Link for navigation
 import data from '../data/data.json'; // Import the data directly if it's available locally
 import axios from 'axios';
 
@@ -25,7 +26,7 @@ const Dashboard = () => {
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
-  
+
     // Predefined document information
     const predefinedDocInfo = {
       format: 'JPEG', // Example format
@@ -33,7 +34,7 @@ const Dashboard = () => {
       numParagraphs: 3, // Example number of paragraphs
       textSnippet: 'This is a snippet of the text content from the uploaded file, showing the beginning of the document.'
     };
-  
+
     // Simulate a delay (for example, if you want to mimic the time it would take to process the file)
     setTimeout(() => {
       setDocInfo(predefinedDocInfo);
@@ -62,17 +63,32 @@ const Dashboard = () => {
       {/* Summary Stats */}
       <div className="grid grid-cols-4 gap-4">
         {[{ title: 'Total Documents', value: summaryStats.totalDocuments, icon: <FaCheckCircle className="text-purple-500" /> },
-          { title: 'Invoices', value: summaryStats.invoiceDocs, icon: <FaTimesCircle className="text-green-500" /> },
-          { title: 'Receipts', value: summaryStats.receiptDocs, icon: <FaClock className="text-yellow-500" /> },
-          { title: 'Performance', value: `${summaryStats.performance}%`, icon: <FaPercentage className="text-blue-500" /> }].map(({ title, value, icon }) => (
-            <div key={title} className="bg-white p-4 shadow-md rounded-lg flex items-center space-x-4">
-              <div className="text-3xl">{icon}</div>
-              <div>
-                <p className="text-gray-500 text-sm">{title}</p>
-                <p className="text-xl font-semibold text-gray-800">{value}</p>
-              </div>
+        { title: 'Invoices', value: summaryStats.invoiceDocs, icon: <FaTimesCircle className="text-green-500" /> },
+        { title: 'Receipts', value: summaryStats.receiptDocs, icon: <FaClock className="text-yellow-500" /> },
+        { title: 'Performance', value: `${summaryStats.performance}%`, icon: <FaPercentage className="text-blue-500" /> }].map(({ title, value, icon }) => (
+          <div key={title} className="bg-white p-4 shadow-md rounded-lg flex items-center space-x-4">
+            <div className="text-3xl">{icon}</div>
+            <div>
+              <p className="text-gray-500 text-sm">{title}</p>
+              <p className="text-xl font-semibold text-gray-800">{value}</p>
             </div>
-          ))}
+          </div>
+        ))}
+      </div>
+
+      {/* Route Buttons */}
+      <div className="grid grid-cols-2 gap-6 mt-6">
+        <Link to="/extract-text">
+          <button className="bg-blue-900 hover:bg-blue-700 text-white px-6 py-3 rounded-xl transsition-all ease-in-out duration-0.3s shadow-lg">
+            Go to Document Text Extractor
+          </button>
+        </Link>
+
+        <Link to="/bank-statement">
+          <button className="bg-blue-900 hover:bg-blue-700 text-white px-6 py-3 rounded-xl transsition-all ease-in-out duration-0.3s shadow-lg">
+            Go to Bank Statement
+          </button>
+        </Link>
       </div>
 
       {/* Charts Row */}
@@ -96,10 +112,10 @@ const Dashboard = () => {
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie data={[{ name: 'Invoice', value: summaryStats.invoiceDocs },
-                          { name: 'Receipt', value: summaryStats.receiptDocs },
-                          { name: 'Contract', value: summaryStats.contractDocs },
-                          { name: 'Other', value: summaryStats.otherDocs }] }
-                   dataKey="value" cx="50%" cy="50%" outerRadius={80}>
+              { name: 'Receipt', value: summaryStats.receiptDocs },
+              { name: 'Contract', value: summaryStats.contractDocs },
+              { name: 'Other', value: summaryStats.otherDocs }]}
+                dataKey="value" cx="50%" cy="50%" outerRadius={80}>
                 <Cell fill="#4CAF50" />
                 <Cell fill="#FF9800" />
                 <Cell fill="#2196F3" />
@@ -168,8 +184,8 @@ const Dashboard = () => {
                 <>
                   <p><strong>Format:</strong> {docInfo.format}</p>
                   <p><strong>Font Size:</strong> {docInfo.fontSize}</p>
-                  <p><strong>Number of Paragraphs:</strong> {docInfo.numParagraphs}</p>
-                  <p><strong>Text Content:</strong> {docInfo.textSnippet}</p>
+                  {/* <p><strong>Number of Paragraphs:</strong> {docInfo.numParagraphs}</p>
+                  <p><strong>Text Content:</strong> {docInfo.textSnippet}</p> */}
                 </>
               ) : (
                 <p className="text-gray-600">Waiting for document information...</p>
@@ -184,14 +200,12 @@ const Dashboard = () => {
         <button
           onClick={handleTrainModel}
           disabled={!selectedFile}  // Disable button if no file is uploaded
-          className={`${
-            !selectedFile ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
-          } text-white px-6 py-3 rounded-lg shadow-lg`}
+          className={`${!selectedFile ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+            } text-white px-6 py-3 rounded-lg shadow-lg`}
         >
           {selectedFile ? "Train Model" : "Upload a file to train the model"}  {/* Change text based on file upload */}
         </button>
       </div>
-
 
       {/* Modal for "Train Model" */}
       {isModalOpen && (

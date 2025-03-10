@@ -8,12 +8,13 @@ import AcceptanceRejection from './components/AcceptanceRejection'
 import HomePage from './components/HomePage'
 import Header from './components/Header'
 import BankStatement from './components/BankStatement'
+import ImageAnalysis from './components/ImageAnalysis'
 
 function App() {
   return (
     <>
       <BrowserRouter>
-      <Header />
+        <Header />
 
         <Routes>
           <Route path="/" element={<Home />} />
@@ -25,6 +26,7 @@ function App() {
           <Route path='/homepage' element={<HomePage />} />
           <Route path="/acceptance-rejection" element={<AcceptanceRejection />} />
           <Route path="/bank-statement" element={<BankStatement />} />
+          <Route path="/image" element={<ImageAnalysis />} />
 
         </Routes>
       </BrowserRouter>

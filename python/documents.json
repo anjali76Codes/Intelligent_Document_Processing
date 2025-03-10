@@ -1,9 +1,0 @@
-{
-    "documents": [
-        {
-            "document_id": "doc1",
-            "barcode": "4273017007072",
-            "expected_name": "John Doe"
-        }
-    ]
-}

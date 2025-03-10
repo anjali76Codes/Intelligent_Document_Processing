@@ -133,7 +133,7 @@ def process_image(file_path):
 
 # Example usage:
 if __name__ == '__main__':
-    file_path = 'element.jpg'  # Replace this with the path to your image
+    file_path = 'second.jpg'  # Replace this with the path to your image
 
     # Process the image based on the filename
     result = process_image(file_path)

@@ -84,9 +84,8 @@ const AcceptanceRejection = () => {
                 </button>
 
                 <div
-                  className={`transition-all duration-500 ease-in-out mt-4 overflow-hidden ${
-                    openUser === user.id ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
-                  }`}
+                  className={`transition-all duration-500 ease-in-out mt-4 overflow-hidden ${openUser === user.id ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+                    }`}
                 >
                   {user.documents.map((doc) => (
                     <div key={doc.id} className="flex items-center mb-4">

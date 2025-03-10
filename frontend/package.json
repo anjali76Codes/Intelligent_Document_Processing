@@ -15,6 +15,7 @@
     "@mui/material": "^6.4.7",
     "axios": "^1.7.6",
     "chart.js": "^4.4.8",
+    "exif-js": "^2.3.0",
     "mammoth": "^1.9.0",
     "pdfjs-dist": "^2.10.377",
     "react": "^18.3.1",

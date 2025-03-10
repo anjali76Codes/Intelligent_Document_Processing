@@ -55,20 +55,33 @@ def process_image(image_path):
 
         if w > 100 and h > 100:
             detected_tables.append({'bbox': (x, y, w, h)})
-            last_column_x = x + w - 50
-            last_column_width = 50
+            
+            # Draw the table bounding box in green
+            cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 3)  # Green color for the table box
+
+            last_column_x = x + w - 50  # Approximate position of the last column
+            last_column_width = 50  # Width of the last column
 
             # Highlight the last column in red
-            cv2.rectangle(image, (last_column_x, y), (last_column_x + last_column_width, y + h), (0, 0, 255), 3)
+            cv2.rectangle(image, (last_column_x, y), (last_column_x + last_column_width, y + h), (0, 0, 255), 3)  # Red color for the last column
             font = cv2.FONT_HERSHEY_SIMPLEX
             cv2.putText(image, "Total of Amount", (last_column_x + 5, y + 30), font, 1, (0, 0, 255), 2, cv2.LINE_AA)
+
+            # To highlight the third row in the last column
+            row_height = h // 5  # Divide the height into 5 rows (this can vary depending on the table structure)
+
+            # Assuming that the third row is around 3/5 of the total height
+            third_row_y = y + 2 * row_height
+
+            # Draw the third row in the last column in blue
+            cv2.rectangle(image, (last_column_x, third_row_y), (last_column_x + last_column_width, third_row_y + row_height), (255, 0, 0), 3)  # Blue color
 
     # Save the result image with highlighted tables
     output_path = os.path.join(OUTPUT_FOLDER, f"{uuid.uuid4().hex}.png")
     cv2.imwrite(output_path, image)
 
     return detected_tables, output_path
- 
+
 @app.route('/outputs/<filename>', methods=['GET'])
 def serve_output_image(filename):
     # Serve the result image from the outputs folder
